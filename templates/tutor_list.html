@@ -1,0 +1,477 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Find Tutors - Home Tutor
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+    <div class="text-center mb-4">
+
+        <h1 class="fw-bold">
+            👨‍🏫 Find a Tutor
+        </h1>
+
+        {% if selected_class and selected_subject %}
+
+            <p class="text-muted">
+                Tutors for
+                <strong>{{ selected_class }}</strong>
+                -
+                <strong>{{ selected_subject }}</strong>
+            </p>
+
+        {% else %}
+
+            <p class="text-muted">
+                Find qualified tutors near you.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =========================
+         SEARCH + SORT
+    ========================== -->
+    <div class="card shadow-sm border-0 p-4 mb-4">
+
+        <form method="GET">
+
+            <!-- Keep selected class -->
+            {% if selected_class %}
+                <input
+                    type="hidden"
+                    name="class"
+                    value="{{ selected_class }}"
+                >
+            {% endif %}
+
+            <!-- Keep selected subject -->
+            {% if selected_subject %}
+                <input
+                    type="hidden"
+                    name="subject"
+                    value="{{ selected_subject }}"
+                >
+            {% endif %}
+
+
+            <div class="row g-3 align-items-end">
+
+                <!-- SEARCH -->
+                <div class="col-md-7">
+
+                    <label
+                        for="search"
+                        class="form-label fw-semibold"
+                    >
+                        🔍 Search Tutor
+                    </label>
+
+                    <input
+                        type="text"
+                        id="search"
+                        name="search"
+                        class="form-control"
+                        value="{{ search_query }}"
+                        placeholder="Search by name, location or qualification"
+                    >
+
+                </div>
+
+
+                <!-- SORT -->
+                <div class="col-md-3">
+
+                    <label
+                        for="sort"
+                        class="form-label fw-semibold"
+                    >
+                        Sort By
+                    </label>
+
+                    <select
+                        id="sort"
+                        name="sort"
+                        class="form-select"
+                    >
+
+                        <option
+                            value="distance"
+                            {% if sort_by == 'distance' %}selected{% endif %}
+                        >
+                            📍 Nearest First
+                        </option>
+
+                        <option
+                            value="rating"
+                            {% if sort_by == 'rating' %}selected{% endif %}
+                        >
+                            ⭐ Highest Rating
+                        </option>
+
+                        <option
+                            value="fee_low"
+                            {% if sort_by == 'fee_low' %}selected{% endif %}
+                        >
+                            💰 Lowest Fee
+                        </option>
+
+                        <option
+                            value="fee_high"
+                            {% if sort_by == 'fee_high' %}selected{% endif %}
+                        >
+                            💰 Highest Fee
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- BUTTON -->
+                <div class="col-md-2">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary w-100"
+                    >
+                        Search
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- =========================
+         ACTIVE FILTERS
+    ========================== -->
+
+    {% if search_query %}
+
+        <div class="alert alert-light border mb-4">
+
+            🔍 Searching for:
+            <strong>{{ search_query }}</strong>
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- =========================
+         TUTOR LIST
+    ========================== -->
+
+    <div class="row g-4">
+
+        {% for item in tutor_data %}
+
+            {% with tutor=item.tutor %}
+
+            <div class="col-md-6 col-lg-4">
+
+                <div class="card shadow-sm border-0 h-100 p-4">
+
+
+                    <!-- TUTOR HEADER -->
+                    <div class="text-center mb-3">
+
+                        <div style="font-size:55px;">
+                            👨‍🏫
+                        </div>
+
+                        <h4 class="fw-bold mt-2 mb-2">
+
+                            {{ tutor.user.first_name }}
+
+                            {{ tutor.user.last_name }}
+
+                        </h4>
+
+                        {% if tutor.is_verified %}
+
+                            <span class="badge bg-success">
+                                ✅ Verified Tutor
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <hr>
+
+
+                    <!-- RATING -->
+                    <div class="text-center mb-3">
+
+                        {% if item.review_count > 0 %}
+
+                            <div class="fs-5">
+
+                                {% if item.average_rating >= 5 %}
+                                    ⭐⭐⭐⭐⭐
+                                {% elif item.average_rating >= 4 %}
+                                    ⭐⭐⭐⭐
+                                {% elif item.average_rating >= 3 %}
+                                    ⭐⭐⭐
+                                {% elif item.average_rating >= 2 %}
+                                    ⭐⭐
+                                {% else %}
+                                    ⭐
+                                {% endif %}
+
+                            </div>
+
+                            <strong>
+                                {{ item.average_rating }}/5
+                            </strong>
+
+                            <span class="text-muted">
+                                ({{ item.review_count }}
+                                review{{ item.review_count|pluralize }})
+                            </span>
+
+                        {% else %}
+
+                            <span class="text-muted">
+                                ⭐ No reviews yet
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- QUALIFICATION -->
+                    <p>
+
+                        <strong>
+                            🎓 Qualification:
+                        </strong>
+                        <br>
+
+                        {% if tutor.qualification %}
+
+                            {{ tutor.qualification }}
+
+                        {% else %}
+
+                            <span class="text-muted">
+                                Not added
+                            </span>
+
+                        {% endif %}
+
+                    </p>
+
+
+                    <!-- EXPERIENCE -->
+                    <p>
+
+                        <strong>
+                            💼 Experience:
+                        </strong>
+
+                        {{ tutor.experience }}
+                        year{{ tutor.experience|pluralize }}
+
+                    </p>
+
+
+                    <!-- CLASSES -->
+                    <p>
+
+                        <strong>
+                            📚 Classes:
+                        </strong>
+                        <br>
+
+                        {{ tutor.classes }}
+
+                    </p>
+
+
+                    <!-- SUBJECTS -->
+                    <p>
+
+                        <strong>
+                            📖 Subjects:
+                        </strong>
+                        <br>
+
+                        {% for subject in tutor.subjects.all %}
+
+                            <span class="badge bg-light text-dark border me-1 mb-1">
+                                {{ subject.name }}
+                            </span>
+
+                        {% empty %}
+
+                            <span class="text-muted">
+                                Not added
+                            </span>
+
+                        {% endfor %}
+
+                    </p>
+
+
+                    <!-- LOCATION -->
+                    <p>
+
+                        <strong>
+                            📍 Location:
+                        </strong>
+                        <br>
+
+                        {% if tutor.location %}
+
+                            {{ tutor.location }}
+
+                        {% else %}
+
+                            <span class="text-muted">
+                                Location not added
+                            </span>
+
+                        {% endif %}
+
+                    </p>
+
+
+                    <!-- DISTANCE -->
+                    <div class="alert alert-light border py-2">
+
+                        <strong>
+                            📍 Distance:
+                        </strong>
+
+                        {{ item.distance|floatformat:2 }}
+                        km away
+
+                    </div>
+
+
+                    <!-- FEE -->
+                    <p>
+
+                        <strong>
+                            💰 Fee:
+                        </strong>
+                        <br>
+
+                        Rs. {{ tutor.fee }} / hour
+
+                    </p>
+
+
+                    <!-- AVAILABILITY -->
+                    <p>
+
+                        <strong>
+                            🕒 Available Time:
+                        </strong>
+                        <br>
+
+                        {% if tutor.available_time %}
+
+                            {{ tutor.available_time }}
+
+                        {% else %}
+
+                            <span class="text-muted">
+                                Not added
+                            </span>
+
+                        {% endif %}
+
+                    </p>
+
+
+                    <!-- REQUEST -->
+                    <div class="mt-auto pt-3">
+
+                        <a
+                            href="{% url 'send_request' tutor.id %}"
+                            class="btn btn-primary w-100"
+                        >
+                            📩 Send Tutor Request
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endwith %}
+
+
+        {% empty %}
+
+            <!-- NO RESULT -->
+
+            <div class="col-12">
+
+                <div class="card shadow-sm border-0 p-5 text-center">
+
+                    <div style="font-size:60px;">
+                        👨‍🏫
+                    </div>
+
+                    <h3 class="fw-bold mt-3">
+                        No Matching Tutors Found
+                    </h3>
+
+                    <p class="text-muted">
+
+                        We couldn't find a verified tutor within
+                        5 km matching your search.
+
+                    </p>
+
+                    <a
+                        href="{% url 'student_dashboard' %}"
+                        class="btn btn-outline-primary"
+                    >
+                        ← Try Another Search
+                    </a>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- BACK -->
+    <div class="text-center mt-5">
+
+        <a
+            href="{% url 'student_dashboard' %}"
+            class="btn btn-outline-secondary"
+        >
+            ← Back to Student Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

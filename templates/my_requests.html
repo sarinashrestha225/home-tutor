@@ -1,0 +1,315 @@
+{% extends 'base.html' %}
+
+{% block title %}
+My Tutor Requests - Home Tutor
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <div class="text-center mb-5">
+
+        <h1 class="fw-bold">
+            📋 My Tutor Requests
+        </h1>
+
+        <p class="text-muted">
+            Track the tutor requests you have sent.
+        </p>
+
+        <a
+            href="{% url 'notifications' %}"
+            class="btn btn-outline-warning mt-2"
+        >
+            🔔 Notifications
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         REQUEST LIST
+    ========================== -->
+
+    {% for booking in requests %}
+
+        <div class="card shadow-sm border-0 p-4 mb-4">
+
+            <div class="row g-4">
+
+
+                <!-- =========================
+                     TUTOR DETAILS
+                ========================== -->
+
+                <div class="col-md-8">
+
+                    <h4 class="fw-bold">
+
+                        👨‍🏫
+
+                        {{ booking.tutor.user.first_name }}
+
+                        {{ booking.tutor.user.last_name }}
+
+                    </h4>
+
+
+                    <p class="text-muted">
+
+                        {{
+                            booking.tutor.qualification
+                            |default:"Qualification not added"
+                        }}
+
+                    </p>
+
+
+                    <p class="mb-2">
+
+                        <strong>Class:</strong>
+
+                        {{ booking.class_name }}
+
+                    </p>
+
+
+                    <p class="mb-2">
+
+                        <strong>Subject:</strong>
+
+                        {{ booking.subject }}
+
+                    </p>
+
+
+                    <p class="mb-2">
+
+                        <strong>Preferred Time:</strong>
+
+                        {{ booking.preferred_time }}
+
+                    </p>
+
+
+                    {% if booking.message %}
+
+                        <p class="mb-2">
+
+                            <strong>Message:</strong>
+
+                            {{ booking.message }}
+
+                        </p>
+
+                    {% endif %}
+
+
+                    <!-- Tutor Location -->
+
+                    {% if booking.tutor.location %}
+
+                        <p class="mb-2">
+
+                            <strong>Location:</strong>
+
+                            📍 {{ booking.tutor.location }}
+
+                        </p>
+
+                    {% endif %}
+
+
+                    <!-- Tutor Fee -->
+
+                    {% if booking.tutor.fee %}
+
+                        <p class="mb-2">
+
+                            <strong>Fee:</strong>
+
+                            💰 Rs. {{ booking.tutor.fee }} / hour
+
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- =========================
+                     STATUS + ACTION
+                ========================== -->
+
+                <div class="col-md-4 text-md-end">
+
+                    <h6 class="fw-bold">
+                        Status
+                    </h6>
+
+
+                    <!-- PENDING -->
+
+                    {% if booking.status == 'Pending' %}
+
+                        <span class="badge bg-warning text-dark fs-6">
+
+                            ⏳ Pending
+
+                        </span>
+
+
+                    <!-- ACCEPTED -->
+
+                    {% elif booking.status == 'Accepted' %}
+
+                        <span class="badge bg-success fs-6">
+
+                            ✅ Accepted
+
+                        </span>
+
+
+                    <!-- REJECTED -->
+
+                    {% elif booking.status == 'Rejected' %}
+
+                        <span class="badge bg-danger fs-6">
+
+                            ❌ Rejected
+
+                        </span>
+
+
+                    <!-- COMPLETED -->
+
+                    {% elif booking.status == 'Completed' %}
+
+                        <span class="badge bg-primary fs-6">
+
+                            ⭐ Completed
+
+                        </span>
+
+
+                    <!-- OTHER -->
+
+                    {% else %}
+
+                        <span class="badge bg-secondary fs-6">
+
+                            {{ booking.status }}
+
+                        </span>
+
+                    {% endif %}
+
+
+                    <!-- REQUEST DATE -->
+
+                    <p class="text-muted mt-3">
+
+                        Requested:
+
+                        {{ booking.created_at|date:"M d, Y - h:i A" }}
+
+                    </p>
+
+
+                    <!-- =========================
+                         REVIEW BUTTON
+                    ========================== -->
+
+                    {% if booking.status == 'Accepted' or booking.status == 'Completed' %}
+
+                        {% if booking.tutor.id in reviewed_tutor_ids %}
+
+                            <div class="mt-3">
+
+                                <span class="badge bg-light text-success border fs-6">
+
+                                    ⭐ Review Submitted
+
+                                </span>
+
+                            </div>
+
+                        {% else %}
+
+                            <div class="mt-3">
+
+                                <a
+                                    href="{% url 'add_review' booking.id %}"
+                                    class="btn btn-outline-warning"
+                                >
+                                    ⭐ Give Review
+                                </a>
+
+                            </div>
+
+                        {% endif %}
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    {% empty %}
+
+
+        <!-- =========================
+             NO REQUESTS
+        ========================== -->
+
+        <div class="alert alert-info text-center p-4">
+
+            <div style="font-size: 50px;">
+                📋
+            </div>
+
+            <h4 class="mt-3">
+                No Tutor Requests Yet
+            </h4>
+
+            <p>
+                You have not sent any tutor requests.
+            </p>
+
+            <a
+                href="{% url 'tutor_list' %}"
+                class="btn btn-primary"
+            >
+                👨‍🏫 Find a Tutor
+            </a>
+
+        </div>
+
+    {% endfor %}
+
+
+    <!-- =========================
+         BACK TO DASHBOARD
+    ========================== -->
+
+    <div class="text-center mt-4">
+
+        <a
+            href="{% url 'student_dashboard' %}"
+            class="btn btn-outline-secondary"
+        >
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

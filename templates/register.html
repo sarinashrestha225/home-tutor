@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Register - Home Tutor
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-7 col-lg-6">
+
+            <div class="card shadow-sm border-0 p-4">
+
+                <div class="text-center mb-4">
+
+                    <h2 class="fw-bold">
+                        Create Your Account
+                    </h2>
+
+                    <p class="text-muted">
+                        Join Home Tutor as a Student/Parent or Tutor
+                    </p>
+
+                </div>
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+                                First Name
+                            </label>
+
+                            {{ form.first_name }}
+
+                            {% for error in form.first_name.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+
+                        </div>
+
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+                                Last Name
+                            </label>
+
+                            {{ form.last_name }}
+
+                            {% for error in form.last_name.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Username
+                        </label>
+
+                        {{ form.username }}
+
+                        {% for error in form.username.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Email
+                        </label>
+
+                        {{ form.email }}
+
+                        {% for error in form.email.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Phone Number
+                        </label>
+
+                        {{ form.phone }}
+
+                        {% for error in form.phone.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            I am a
+                        </label>
+
+                        {{ form.role }}
+
+                        {% for error in form.role.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Password
+                        </label>
+
+                        {{ form.password }}
+
+                        {% for error in form.password.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Confirm Password
+                        </label>
+
+                        {{ form.confirm_password }}
+
+                        {% for error in form.confirm_password.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary w-100"
+                    >
+                        Create Account
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

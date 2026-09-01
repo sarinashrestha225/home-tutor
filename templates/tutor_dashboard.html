@@ -1,0 +1,454 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Tutor Dashboard - Home Tutor
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- =========================
+         WELCOME
+    ========================== -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1 class="fw-bold">
+                Welcome, {{ user.first_name|default:user.username }} 👨‍🏫
+            </h1>
+
+            <p class="text-muted mb-0">
+                Manage your tutor profile, location and student requests.
+            </p>
+        </div>
+
+        <!-- FIXED LOGOUT LINK -->
+        <a
+            href="{% url 'logout' %}"
+            class="btn btn-outline-danger"
+        >
+            Logout
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         TUTOR PROFILE
+    ========================== -->
+    <div class="card shadow-sm border-0 p-4 mb-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <h4 class="fw-bold mb-0">
+                👤 My Tutor Profile
+            </h4>
+
+            <a
+                href="{% url 'tutor_profile' %}"
+                class="btn btn-primary"
+            >
+                Edit Profile
+            </a>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            <!-- Qualification -->
+            <div class="col-md-6">
+
+                <div class="border rounded p-3 h-100">
+
+                    <small class="text-muted">
+                        Qualification
+                    </small>
+
+                    <h6 class="mt-2 mb-0">
+
+                        {% if tutor_profile and tutor_profile.qualification %}
+
+                            {{ tutor_profile.qualification }}
+
+                        {% else %}
+
+                            Not added yet
+
+                        {% endif %}
+
+                    </h6>
+
+                </div>
+
+            </div>
+
+
+            <!-- Experience -->
+            <div class="col-md-6">
+
+                <div class="border rounded p-3 h-100">
+
+                    <small class="text-muted">
+                        Experience
+                    </small>
+
+                    <h6 class="mt-2 mb-0">
+
+                        {% if tutor_profile %}
+
+                            {{ tutor_profile.experience }} year(s)
+
+                        {% else %}
+
+                            Not added yet
+
+                        {% endif %}
+
+                    </h6>
+
+                </div>
+
+            </div>
+
+
+            <!-- Classes -->
+            <div class="col-md-6">
+
+                <div class="border rounded p-3 h-100">
+
+                    <small class="text-muted">
+                        Classes You Teach
+                    </small>
+
+                    <h6 class="mt-2 mb-0">
+
+                        {% if tutor_profile and tutor_profile.classes %}
+
+                            {{ tutor_profile.classes }}
+
+                        {% else %}
+
+                            Class 2 - Class 10
+
+                        {% endif %}
+
+                    </h6>
+
+                </div>
+
+            </div>
+
+
+            <!-- Subjects -->
+            <div class="col-md-6">
+
+                <div class="border rounded p-3 h-100">
+
+                    <small class="text-muted">
+                        Subjects
+                    </small>
+
+                    <h6 class="mt-2 mb-0">
+
+                        {% if tutor_profile %}
+
+                            {% for subject in tutor_profile.subjects.all %}
+
+                                <span class="badge bg-light text-dark border me-1 mb-1">
+                                    {{ subject.name }}
+                                </span>
+
+                            {% empty %}
+
+                                Not added yet
+
+                            {% endfor %}
+
+                        {% else %}
+
+                            Not added yet
+
+                        {% endif %}
+
+                    </h6>
+
+                </div>
+
+            </div>
+
+
+            <!-- Fee -->
+            <div class="col-md-6">
+
+                <div class="border rounded p-3 h-100">
+
+                    <small class="text-muted">
+                        Fee
+                    </small>
+
+                    <h6 class="mt-2 mb-0">
+
+                        {% if tutor_profile %}
+
+                            Rs. {{ tutor_profile.fee }} / hour
+
+                        {% else %}
+
+                            Not added yet
+
+                        {% endif %}
+
+                    </h6>
+
+                </div>
+
+            </div>
+
+
+            <!-- Location -->
+            <div class="col-md-6">
+
+                <div class="border rounded p-3 h-100">
+
+                    <small class="text-muted">
+                        Location
+                    </small>
+
+                    <h6 class="mt-2 mb-0">
+
+                        {% if tutor_profile and tutor_profile.location %}
+
+                            📍 {{ tutor_profile.location }}
+
+                        {% else %}
+
+                            Location not added
+
+                        {% endif %}
+
+                    </h6>
+
+                </div>
+
+            </div>
+
+
+            <!-- Available Time -->
+            <div class="col-md-6">
+
+                <div class="border rounded p-3 h-100">
+
+                    <small class="text-muted">
+                        Available Time
+                    </small>
+
+                    <h6 class="mt-2 mb-0">
+
+                        {% if tutor_profile and tutor_profile.available_time %}
+
+                            🕒 {{ tutor_profile.available_time }}
+
+                        {% else %}
+
+                            Not added yet
+
+                        {% endif %}
+
+                    </h6>
+
+                </div>
+
+            </div>
+
+
+            <!-- Verification -->
+            <div class="col-md-6">
+
+                <div class="border rounded p-3 h-100">
+
+                    <small class="text-muted">
+                        Verification
+                    </small>
+
+                    <h6 class="mt-2 mb-0">
+
+                        {% if tutor_profile and tutor_profile.is_verified %}
+
+                            <span class="text-success">
+                                ✅ Verified Tutor
+                            </span>
+
+                        {% else %}
+
+                            <span class="text-warning">
+                                ⏳ Verification Pending
+                            </span>
+
+                        {% endif %}
+
+                    </h6>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         STUDENT REQUESTS
+    ========================== -->
+    <div class="card shadow-sm border-0 p-4 mb-4">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+            <div>
+
+                <h4 class="fw-bold mb-1">
+                    📋 Student Requests
+                </h4>
+
+                <p class="text-muted mb-0">
+                    View and manage requests sent by students.
+                </p>
+
+            </div>
+
+            <a
+                href="{% url 'tutor_requests' %}"
+                class="btn btn-outline-primary"
+            >
+                View Requests
+            </a>
+
+        </div>
+
+
+        <div class="alert alert-info mt-4 mb-0">
+
+            Check your incoming student requests and
+            accept or reject them.
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         QUICK ACTIONS
+    ========================== -->
+    <div class="row g-4">
+
+
+        <!-- Edit Profile -->
+        <div class="col-md-4">
+
+            <div class="card shadow-sm border-0 p-4 h-100">
+
+                <div style="font-size: 42px;">
+                    👤
+                </div>
+
+                <h5 class="fw-bold mt-3">
+                    Edit Profile
+                </h5>
+
+                <p class="text-muted">
+                    Update your qualification, experience,
+                    classes, subjects, fee and availability.
+                </p>
+
+                <a
+                    href="{% url 'tutor_profile' %}"
+                    class="btn btn-primary mt-auto"
+                >
+                    Edit Profile
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- Location -->
+        <div class="col-md-4">
+
+            <div class="card shadow-sm border-0 p-4 h-100">
+
+                <div style="font-size: 42px;">
+                    📍
+                </div>
+
+                <h5 class="fw-bold mt-3">
+                    My Location
+                </h5>
+
+                <p class="text-muted">
+                    Add or update your location so nearby
+                    students can find you.
+                </p>
+
+                <a
+                    href="{% url 'tutor_profile' %}"
+                    class="btn btn-outline-primary mt-auto"
+                >
+                    Update Location
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- Requests -->
+        <div class="col-md-4">
+
+            <div class="card shadow-sm border-0 p-4 h-100">
+
+                <div style="font-size: 42px;">
+                    📋
+                </div>
+
+                <h5 class="fw-bold mt-3">
+                    My Requests
+                </h5>
+
+                <p class="text-muted">
+                    Accept or reject requests from students
+                    looking for home tutors.
+                </p>
+
+                <a
+                    href="{% url 'tutor_requests' %}"
+                    class="btn btn-outline-primary mt-auto"
+                >
+                    View Requests
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         DASHBOARD TIP
+    ========================== -->
+    <div class="alert alert-light border mt-5">
+
+        <strong>Tip:</strong>
+
+        Complete your tutor profile with your qualification,
+        subjects, fee and location to increase your chances
+        of getting student requests.
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,309 @@
+/* ==================================================
+   GLOBAL
+================================================== */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #212529;
+    background-color: #f8f9fa;
+}
+
+a {
+    text-decoration: none;
+}
+
+.card {
+    border-radius: 15px;
+}
+
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+
+/* ==================================================
+   NAVBAR
+================================================== */
+
+.navbar {
+    background-color: #ffffff;
+}
+
+.navbar-brand {
+    font-weight: 700;
+}
+
+.nav-link {
+    transition: 0.2s ease;
+}
+
+.nav-link:hover {
+    transform: translateY(-1px);
+}
+
+
+/* ==================================================
+   HERO
+================================================== */
+
+.hero-section {
+    padding: 80px 20px;
+}
+
+.hero-icon {
+    font-size: 70px;
+}
+
+.hero-title {
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.hero-text {
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* ==================================================
+   FEATURE CARDS
+================================================== */
+
+.feature-card {
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.10);
+}
+
+.feature-icon {
+    font-size: 50px;
+}
+
+
+/* ==================================================
+   DASHBOARD CARDS
+================================================== */
+
+.dashboard-card {
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ==================================================
+   TUTOR CARDS
+================================================== */
+
+.tutor-card {
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.tutor-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.10);
+}
+
+.tutor-avatar {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 40px;
+    background-color: #f1f3f5;
+}
+
+
+/* ==================================================
+   RATING
+================================================== */
+
+.rating-stars {
+    letter-spacing: 2px;
+}
+
+
+/* ==================================================
+   FORM
+================================================== */
+
+.form-control,
+.form-select {
+    border-radius: 8px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    box-shadow: none;
+}
+
+
+/* ==================================================
+   CHECKBOXES
+================================================== */
+
+.form-check {
+    padding: 8px 10px;
+    border-radius: 8px;
+}
+
+.form-check:hover {
+    background-color: #f8f9fa;
+}
+
+
+/* ==================================================
+   NOTIFICATIONS
+================================================== */
+
+.notification-card {
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.notification-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ==================================================
+   FOOTER
+================================================== */
+
+.footer {
+    background-color: #ffffff;
+}
+
+.footer a {
+    color: #6c757d;
+}
+
+.footer a:hover {
+    color: #212529;
+}
+
+
+/* ==================================================
+   MOBILE RESPONSIVE
+================================================== */
+
+@media (max-width: 991px) {
+
+    .navbar .nav-link {
+        padding: 8px 0;
+    }
+
+    .navbar .btn {
+        margin-bottom: 6px;
+    }
+}
+
+
+@media (max-width: 767px) {
+
+    .hero-section {
+        padding: 55px 15px;
+    }
+
+    .hero-icon {
+        font-size: 55px;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-text {
+        font-size: 1rem;
+    }
+
+    .card {
+        border-radius: 12px;
+    }
+
+    .btn-lg {
+        width: 100%;
+    }
+
+    .input-group {
+        flex-direction: column;
+    }
+
+    .input-group .form-control,
+    .input-group .form-select,
+    .input-group .btn {
+        width: 100%;
+        border-radius: 8px !important;
+        margin-bottom: 8px;
+    }
+
+    .d-flex.gap-2 {
+        flex-direction: column;
+    }
+
+    .d-flex.gap-2 .btn {
+        width: 100%;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+}
+
+
+/* ==================================================
+   SMALL MOBILE
+================================================== */
+
+@media (max-width: 480px) {
+
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.3rem;
+    }
+
+    h4 {
+        font-size: 1.15rem;
+    }
+
+    .card {
+        padding: 20px !important;
+    }
+
+}

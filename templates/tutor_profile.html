@@ -1,0 +1,495 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Tutor Profile - Home Tutor
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow-sm border-0 p-4">
+
+                <!-- =========================
+                     HEADER
+                ========================== -->
+                <div class="text-center mb-4">
+
+                    <h2 class="fw-bold">
+                        👨‍🏫 Tutor Profile
+                    </h2>
+
+                    <p class="text-muted">
+                        Complete your profile so students can find you.
+                    </p>
+
+                </div>
+
+
+                <!-- =========================
+                     FORM ERRORS
+                ========================== -->
+                {% if form.non_field_errors %}
+
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+
+                {% endif %}
+
+
+                <form method="POST" id="tutorProfileForm">
+
+                    {% csrf_token %}
+
+
+                    <!-- =========================
+                         QUALIFICATION
+                    ========================== -->
+                    <div class="mb-4">
+
+                        <label
+                            for="{{ form.qualification.id_for_label }}"
+                            class="form-label fw-semibold"
+                        >
+                            Qualification
+                        </label>
+
+                        {{ form.qualification }}
+
+                        {% for error in form.qualification.errors %}
+
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- =========================
+                         EXPERIENCE
+                    ========================== -->
+                    <div class="mb-4">
+
+                        <label
+                            for="{{ form.experience.id_for_label }}"
+                            class="form-label fw-semibold"
+                        >
+                            Experience (Years)
+                        </label>
+
+                        {{ form.experience }}
+
+                        {% for error in form.experience.errors %}
+
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- =========================
+                         CLASSES
+                    ========================== -->
+                    <div class="mb-4">
+
+                        <label class="form-label fw-semibold">
+                            Classes You Teach
+                        </label>
+
+                        <div class="border rounded p-3">
+
+                            <div class="row g-2">
+
+                                {% for checkbox in form.classes %}
+
+                                    <div class="col-md-4 col-6">
+
+                                        <div class="form-check">
+
+                                            {{ checkbox.tag }}
+
+                                            <label
+                                                class="form-check-label"
+                                                for="{{ checkbox.id_for_label }}"
+                                            >
+                                                {{ checkbox.choice_label }}
+                                            </label>
+
+                                        </div>
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+                        <small class="text-muted d-block mt-2">
+                            Select all classes you teach.
+                        </small>
+
+                        {% for error in form.classes.errors %}
+
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- =========================
+                         SUBJECTS
+                    ========================== -->
+                    <div class="mb-4">
+
+                        <label
+                            for="{{ form.subjects.id_for_label }}"
+                            class="form-label fw-semibold"
+                        >
+                            Subjects
+                        </label>
+
+                        {{ form.subjects }}
+
+                        <small class="text-muted d-block mt-1">
+                            Hold Ctrl and select multiple subjects.
+                        </small>
+
+                        {% for error in form.subjects.errors %}
+
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- =========================
+                         LOCATION
+                    ========================== -->
+                    <div class="mb-4">
+
+                        <label
+                            for="{{ form.location.id_for_label }}"
+                            class="form-label fw-semibold"
+                        >
+                            Location
+                        </label>
+
+                        <div class="input-group">
+
+                            {{ form.location }}
+
+                            <button
+                                type="button"
+                                id="getLocationButton"
+                                class="btn btn-outline-primary"
+                            >
+                                📍 Use My Location
+                            </button>
+
+                        </div>
+
+                        <small
+                            id="locationStatus"
+                            class="text-muted d-block mt-2"
+                        >
+                            Enter your location manually or use GPS.
+                        </small>
+
+                        {% for error in form.location.errors %}
+
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- =========================
+                         LATITUDE
+                    ========================== -->
+                    <div class="mb-4">
+
+                        <label
+                            for="latitude"
+                            class="form-label fw-semibold"
+                        >
+                            Latitude
+                        </label>
+
+                        <input
+                            type="text"
+                            name="latitude"
+                            id="latitude"
+                            class="form-control"
+                            value="{% if form.instance.latitude != None %}{{ form.instance.latitude }}{% endif %}"
+                            readonly
+                        >
+
+                        <small class="text-muted">
+                            Automatically filled by GPS.
+                        </small>
+
+                    </div>
+
+
+                    <!-- =========================
+                         LONGITUDE
+                    ========================== -->
+                    <div class="mb-4">
+
+                        <label
+                            for="longitude"
+                            class="form-label fw-semibold"
+                        >
+                            Longitude
+                        </label>
+
+                        <input
+                            type="text"
+                            name="longitude"
+                            id="longitude"
+                            class="form-control"
+                            value="{% if form.instance.longitude != None %}{{ form.instance.longitude }}{% endif %}"
+                            readonly
+                        >
+
+                        <small class="text-muted">
+                            Automatically filled by GPS.
+                        </small>
+
+                    </div>
+
+
+                    <!-- =========================
+                         FEE
+                    ========================== -->
+                    <div class="mb-4">
+
+                        <label
+                            for="{{ form.fee.id_for_label }}"
+                            class="form-label fw-semibold"
+                        >
+                            Fee per Hour (Rs.)
+                        </label>
+
+                        {{ form.fee }}
+
+                        {% for error in form.fee.errors %}
+
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- =========================
+                         AVAILABLE TIME
+                    ========================== -->
+                    <div class="mb-4">
+
+                        <label class="form-label fw-semibold">
+                            Available Time
+                        </label>
+
+                        <div class="border rounded p-3">
+
+                            <div class="row g-2">
+
+                                {% for checkbox in form.available_time %}
+
+                                    <div class="col-md-6 col-12">
+
+                                        <div class="form-check">
+
+                                            {{ checkbox.tag }}
+
+                                            <label
+                                                class="form-check-label"
+                                                for="{{ checkbox.id_for_label }}"
+                                            >
+                                                {{ checkbox.choice_label }}
+                                            </label>
+
+                                        </div>
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+                        <small class="text-muted d-block mt-2">
+                            Select all time slots when you are available.
+                        </small>
+
+                        {% for error in form.available_time.errors %}
+
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- =========================
+                         BUTTONS
+                    ========================== -->
+                    <div class="d-flex gap-2">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            💾 Save Profile
+                        </button>
+
+                        <a
+                            href="/tutor-dashboard/"
+                            class="btn btn-outline-secondary"
+                        >
+                            ← Back to Dashboard
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     GPS JAVASCRIPT
+========================== -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const locationButton =
+        document.getElementById("getLocationButton");
+
+    const locationStatus =
+        document.getElementById("locationStatus");
+
+    const latitudeField =
+        document.getElementById("latitude");
+
+    const longitudeField =
+        document.getElementById("longitude");
+
+
+    locationButton.addEventListener(
+        "click",
+        function () {
+
+            if (!navigator.geolocation) {
+
+                locationStatus.innerText =
+                    "❌ Geolocation is not supported by your browser.";
+
+                return;
+            }
+
+
+            locationStatus.innerText =
+                "📍 Getting your current location...";
+
+
+            navigator.geolocation.getCurrentPosition(
+
+                function (position) {
+
+                    const latitude =
+                        position.coords.latitude;
+
+                    const longitude =
+                        position.coords.longitude;
+
+
+                    latitudeField.value =
+                        latitude.toFixed(8);
+
+                    longitudeField.value =
+                        longitude.toFixed(8);
+
+
+                    locationStatus.innerText =
+                        "✅ GPS location detected successfully.";
+
+                },
+
+
+                function (error) {
+
+                    if (error.code === 1) {
+
+                        locationStatus.innerText =
+                            "❌ Location permission denied. Please allow location access.";
+
+                    } else if (error.code === 2) {
+
+                        locationStatus.innerText =
+                            "❌ Your location could not be detected.";
+
+                    } else if (error.code === 3) {
+
+                        locationStatus.innerText =
+                            "❌ Location request timed out. Try again.";
+
+                    } else {
+
+                        locationStatus.innerText =
+                            "❌ Unable to get your location.";
+
+                    }
+
+                },
+
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                }
+
+            );
+
+        }
+    );
+
+});
+
+</script>
+
+{% endblock %}

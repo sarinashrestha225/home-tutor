@@ -1,0 +1,521 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home Tutor - Find Your Tutor
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- =========================
+         HERO
+    ========================== -->
+    <div class="text-center py-5">
+
+        <div style="font-size: 70px;">
+            👨‍🏫
+        </div>
+
+        <h1 class="fw-bold display-5 mt-3">
+            Find the Right Home Tutor Near You
+        </h1>
+
+        <p class="lead text-muted mt-3">
+            Find qualified tutors for students from
+            Class 2 to Class 10 based on your subject and nearby location.
+        </p>
+
+        <div class="d-flex justify-content-center gap-2 flex-wrap mt-4">
+
+            {% if user.is_authenticated %}
+
+                <a
+                    href="{% url 'tutor_list' %}"
+                    class="btn btn-primary btn-lg"
+                >
+                    👨‍🏫 Find Tutors
+                </a>
+
+                {% if user.userprofile.role == 'student' %}
+
+                    <a
+                        href="{% url 'student_dashboard' %}"
+                        class="btn btn-outline-primary btn-lg"
+                    >
+                        👨‍🎓 Student Dashboard
+                    </a>
+
+                {% elif user.userprofile.role == 'tutor' %}
+
+                    <a
+                        href="{% url 'tutor_dashboard' %}"
+                        class="btn btn-outline-primary btn-lg"
+                    >
+                        👨‍🏫 Tutor Dashboard
+                    </a>
+
+                {% elif user.is_staff %}
+
+                    <a
+                        href="/admin-dashboard/"
+                        class="btn btn-outline-dark btn-lg"
+                    >
+                        🛠️ Admin Dashboard
+                    </a>
+
+                {% endif %}
+
+            {% else %}
+
+                <a
+                    href="{% url 'login' %}"
+                    class="btn btn-primary btn-lg"
+                >
+                    🔑 Login
+                </a>
+
+                <a
+                    href="{% url 'register' %}"
+                    class="btn btn-outline-primary btn-lg"
+                >
+                    📝 Register
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         WHY CHOOSE HOME TUTOR
+    ========================== -->
+
+    <section class="mt-5">
+
+        <div class="text-center mb-4">
+
+            <h2 class="fw-bold">
+                Why Choose Home Tutor?
+            </h2>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <!-- CLASS 2-10 -->
+
+            <div class="col-md-4">
+
+                <a
+                    href="{% url 'tutor_list' %}"
+                    class="text-decoration-none text-dark"
+                >
+
+                    <div
+                        class="card border-0 shadow-sm h-100 p-4 text-center"
+                        style="cursor:pointer;"
+                    >
+
+                        <div style="font-size: 50px;">
+                            📚
+                        </div>
+
+                        <h4 class="fw-bold mt-3">
+                            Class 2–10
+                        </h4>
+
+                        <p class="text-muted mb-0">
+                            Find tutors for students from
+                            Class 2 to Class 10.
+                        </p>
+
+                        <div class="mt-3">
+
+                            <span class="btn btn-outline-primary">
+                                Find Tutors →
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <!-- NEARBY TUTORS -->
+
+            <div class="col-md-4">
+
+                <a
+                    href="{% url 'tutor_list' %}"
+                    class="text-decoration-none text-dark"
+                >
+
+                    <div
+                        class="card border-0 shadow-sm h-100 p-4 text-center"
+                        style="cursor:pointer;"
+                    >
+
+                        <div style="font-size: 50px;">
+                            📍
+                        </div>
+
+                        <h4 class="fw-bold mt-3">
+                            Nearby Tutors
+                        </h4>
+
+                        <p class="text-muted mb-0">
+                            Find tutors near your current
+                            location using GPS.
+                        </p>
+
+                        <div class="mt-3">
+
+                            <span class="btn btn-outline-primary">
+                                Find Nearby Tutors →
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <!-- TRUSTED TUTORS -->
+
+            <div class="col-md-4">
+
+                <a
+                    href="{% url 'tutor_list' %}"
+                    class="text-decoration-none text-dark"
+                >
+
+                    <div
+                        class="card border-0 shadow-sm h-100 p-4 text-center"
+                        style="cursor:pointer;"
+                    >
+
+                        <div style="font-size: 50px;">
+                            ⭐
+                        </div>
+
+                        <h4 class="fw-bold mt-3">
+                            Trusted Tutors
+                        </h4>
+
+                        <p class="text-muted mb-0">
+                            Check tutor qualification,
+                            experience and reviews.
+                        </p>
+
+                        <div class="mt-3">
+
+                            <span class="btn btn-outline-primary">
+                                View Tutors →
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         HOW IT WORKS
+    ========================== -->
+
+    <section class="mt-5 py-5">
+
+        <div class="text-center mb-4">
+
+            <h2 class="fw-bold">
+                How It Works
+            </h2>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <!-- STEP 1 -->
+
+            <div class="col-md-4">
+
+                {% if user.is_authenticated %}
+
+                    <a
+                        href="{% url 'student_dashboard' %}"
+                        class="text-decoration-none text-dark"
+                    >
+
+                {% else %}
+
+                    <a
+                        href="{% url 'register' %}"
+                        class="text-decoration-none text-dark"
+                    >
+
+                {% endif %}
+
+                        <div
+                            class="card border-0 shadow-sm h-100 p-4 text-center"
+                            style="cursor:pointer;"
+                        >
+
+                            <div
+                                class="rounded-circle bg-primary text-white mx-auto mb-3 d-flex align-items-center justify-content-center"
+                                style="
+                                    width:60px;
+                                    height:60px;
+                                    font-size:25px;
+                                "
+                            >
+                                1
+                            </div>
+
+                            <h5 class="fw-bold">
+                                Select Your Need
+                            </h5>
+
+                            <p class="text-muted">
+                                Choose class and subject.
+                            </p>
+
+                            <span class="btn btn-outline-primary">
+                                Start →
+                            </span>
+
+                        </div>
+
+                    </a>
+
+            </div>
+
+
+            <!-- STEP 2 -->
+
+            <div class="col-md-4">
+
+                <a
+                    href="{% url 'tutor_list' %}"
+                    class="text-decoration-none text-dark"
+                >
+
+                    <div
+                        class="card border-0 shadow-sm h-100 p-4 text-center"
+                        style="cursor:pointer;"
+                    >
+
+                        <div
+                            class="rounded-circle bg-primary text-white mx-auto mb-3 d-flex align-items-center justify-content-center"
+                            style="
+                                width:60px;
+                                height:60px;
+                                font-size:25px;
+                            "
+                        >
+                            2
+                        </div>
+
+                        <h5 class="fw-bold">
+                            Find Nearby Tutor
+                        </h5>
+
+                        <p class="text-muted">
+                            See verified tutors available near you.
+                        </p>
+
+                        <span class="btn btn-outline-primary">
+                            View Tutors →
+                        </span>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <!-- STEP 3 -->
+
+            <div class="col-md-4">
+
+                <a
+                    href="{% url 'tutor_list' %}"
+                    class="text-decoration-none text-dark"
+                >
+
+                    <div
+                        class="card border-0 shadow-sm h-100 p-4 text-center"
+                        style="cursor:pointer;"
+                    >
+
+                        <div
+                            class="rounded-circle bg-primary text-white mx-auto mb-3 d-flex align-items-center justify-content-center"
+                            style="
+                                width:60px;
+                                height:60px;
+                                font-size:25px;
+                            "
+                        >
+                            3
+                        </div>
+
+                        <h5 class="fw-bold">
+                            Send Request
+                        </h5>
+
+                        <p class="text-muted">
+                            Send a tutor request and start learning.
+                        </p>
+
+                        <span class="btn btn-outline-primary">
+                            Send Request →
+                        </span>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         QUICK ACCESS
+    ========================== -->
+
+    {% if user.is_authenticated %}
+
+        <div class="card shadow-sm border-0 p-4 mt-4">
+
+            <div class="text-center">
+
+                <h4 class="fw-bold">
+                    Quick Access
+                </h4>
+
+                <p class="text-muted">
+                    Open your account features.
+                </p>
+
+            </div>
+
+
+            <div class="d-flex justify-content-center gap-2 flex-wrap mt-3">
+
+                {% if user.userprofile.role == 'student' %}
+
+                    <a
+                        href="{% url 'student_dashboard' %}"
+                        class="btn btn-outline-primary"
+                    >
+                        👨‍🎓 Student Dashboard
+                    </a>
+
+                    <a
+                        href="{% url 'tutor_list' %}"
+                        class="btn btn-outline-primary"
+                    >
+                        👨‍🏫 Find Tutors
+                    </a>
+
+                    <a
+                        href="{% url 'my_requests' %}"
+                        class="btn btn-outline-primary"
+                    >
+                        📋 My Requests
+                    </a>
+
+                    <a
+                        href="{% url 'notifications' %}"
+                        class="btn btn-outline-warning"
+                    >
+                        🔔 Notifications
+                    </a>
+
+                    <a
+                        href="{% url 'student_profile' %}"
+                        class="btn btn-outline-secondary"
+                    >
+                        👤 My Profile
+                    </a>
+
+                {% elif user.userprofile.role == 'tutor' %}
+
+                    <a
+                        href="{% url 'tutor_dashboard' %}"
+                        class="btn btn-outline-primary"
+                    >
+                        👨‍🏫 Tutor Dashboard
+                    </a>
+
+                    <a
+                        href="/tutor/profile/"
+                        class="btn btn-outline-primary"
+                    >
+                        👤 My Profile
+                    </a>
+
+                    <a
+                        href="{% url 'tutor_requests' %}"
+                        class="btn btn-outline-primary"
+                    >
+                        📋 Student Requests
+                    </a>
+
+                    <a
+                        href="{% url 'notifications' %}"
+                        class="btn btn-outline-warning"
+                    >
+                        🔔 Notifications
+                    </a>
+
+                {% elif user.is_staff %}
+
+                    <a
+                        href="/admin-dashboard/"
+                        class="btn btn-outline-dark"
+                    >
+                        🛠️ Admin Dashboard
+                    </a>
+
+                    <a
+                        href="/admin/"
+                        class="btn btn-dark"
+                    >
+                        ⚙️ Admin Panel
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

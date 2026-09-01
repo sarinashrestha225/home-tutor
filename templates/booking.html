@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Send Tutor Request - Home Tutor
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7">
+
+            <div class="card shadow-sm border-0 p-4">
+
+                <div class="text-center mb-4">
+
+                    <div style="font-size: 55px;">
+                        📩
+                    </div>
+
+                    <h2 class="fw-bold">
+                        Send Tutor Request
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Send a request to
+                        <strong>
+                            {{ tutor.user.first_name }}
+                            {{ tutor.user.last_name }}
+                        </strong>
+                    </p>
+
+                </div>
+
+
+                <div class="alert alert-light border">
+
+                    <strong>Qualification:</strong>
+                    {{ tutor.qualification|default:"Not added" }}
+
+                    <br>
+
+                    <strong>Location:</strong>
+                    {{ tutor.location|default:"Not added" }}
+
+                    <br>
+
+                    <strong>Fee:</strong>
+                    Rs. {{ tutor.fee }} / hour
+
+                </div>
+
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <!-- Class -->
+                    <div class="mb-3">
+
+                        <label class="form-label fw-semibold">
+                            Select Class
+                        </label>
+
+                        {{ form.class_name }}
+
+                        {% for error in form.class_name.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- Subject -->
+                    <div class="mb-3">
+
+                        <label class="form-label fw-semibold">
+                            Subject
+                        </label>
+
+                        {{ form.subject }}
+
+                        {% for error in form.subject.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- Preferred Time -->
+                    <div class="mb-3">
+
+                        <label class="form-label fw-semibold">
+                            Preferred Time
+                        </label>
+
+                        {{ form.preferred_time }}
+
+                        {% for error in form.preferred_time.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- Message -->
+                    <div class="mb-4">
+
+                        <label class="form-label fw-semibold">
+                            Message to Tutor
+                        </label>
+
+                        {{ form.message }}
+
+                        {% for error in form.message.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+
+                    <div class="d-flex gap-2">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            📩 Send Request
+                        </button>
+
+                        <a
+                            href="/tutor/list/"
+                            class="btn btn-outline-secondary"
+                        >
+                            Cancel
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

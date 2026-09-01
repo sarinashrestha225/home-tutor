@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Review Tutor - Home Tutor
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm border-0 p-4">
+
+                <div class="text-center mb-4">
+
+                    <div style="font-size: 55px;">
+                        ⭐
+                    </div>
+
+                    <h2 class="fw-bold">
+                        Review Tutor
+                    </h2>
+
+                    <p class="text-muted">
+                        Share your experience with
+                        <strong>
+                            {{ tutor.user.get_full_name|default:tutor.user.username }}
+                        </strong>
+                    </p>
+
+                </div>
+
+                {% if form.non_field_errors %}
+
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+
+                {% endif %}
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <!-- RATING -->
+                    <div class="mb-4">
+
+                        <label class="form-label fw-semibold">
+                            Rating
+                        </label>
+
+                        {{ form.rating }}
+
+                        {% for error in form.rating.errors %}
+
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- COMMENT -->
+                    <div class="mb-4">
+
+                        <label class="form-label fw-semibold">
+                            Your Review
+                        </label>
+
+                        {{ form.comment }}
+
+                        {% for error in form.comment.errors %}
+
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- BUTTONS -->
+                    <div class="d-flex gap-2">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            ⭐ Submit Review
+                        </button>
+
+                        <a
+                            href="{% url 'my_requests' %}"
+                            class="btn btn-outline-secondary"
+                        >
+                            ← Back
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Student Profile - Home Tutor
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7">
+
+            <div class="card shadow-sm border-0 p-4">
+
+                <!-- =========================================
+                     HEADER
+                ========================================== -->
+
+                <div class="text-center mb-4">
+
+                    <div style="font-size:55px;">
+                        👨‍🎓
+                    </div>
+
+                    <h2 class="fw-bold">
+                        Student Profile
+                    </h2>
+
+                    <p class="text-muted">
+                        Update your contact and location information.
+                    </p>
+
+                </div>
+
+
+                <!-- =========================================
+                     SUCCESS / ERROR MESSAGES
+                ========================================== -->
+
+                {% if messages %}
+
+                    {% for message in messages %}
+
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+
+                <!-- =========================================
+                     FORM ERRORS
+                ========================================== -->
+
+                {% if form.non_field_errors %}
+
+                    <div class="alert alert-danger">
+
+                        {{ form.non_field_errors }}
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- =========================================
+                     PROFILE FORM
+                ========================================== -->
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+
+                    <!-- PHONE -->
+
+                    <div class="mb-4">
+
+                        <label
+                            for="{{ form.phone.id_for_label }}"
+                            class="form-label fw-semibold"
+                        >
+                            Phone Number
+                        </label>
+
+                        {{ form.phone }}
+
+                        {% for error in form.phone.errors %}
+
+                            <div class="text-danger small mt-1">
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- LOCATION -->
+
+                    <div class="mb-4">
+
+                        <label
+                            for="{{ form.location.id_for_label }}"
+                            class="form-label fw-semibold"
+                        >
+                            Location
+                        </label>
+
+                        {{ form.location }}
+
+                        {% for error in form.location.errors %}
+
+                            <div class="text-danger small mt-1">
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- GPS INFO -->
+
+                    <div class="card bg-light border p-3 mb-4">
+
+                        <h6 class="fw-bold">
+                            📍 Saved GPS Location
+                        </h6>
+
+                        {% if request.user.userprofile.latitude != None %}
+
+                            <p class="mb-1">
+
+                                <strong>Latitude:</strong>
+
+                                {{ request.user.userprofile.latitude }}
+
+                            </p>
+
+                            <p class="mb-0">
+
+                                <strong>Longitude:</strong>
+
+                                {{ request.user.userprofile.longitude }}
+
+                            </p>
+
+                        {% else %}
+
+                            <p class="text-muted mb-0">
+                                GPS location has not been saved yet.
+                            </p>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- BUTTONS -->
+
+                    <div class="d-flex gap-2">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            💾 Save Profile
+                        </button>
+
+
+                        <a
+                            href="{% url 'student_dashboard' %}"
+                            class="btn btn-outline-secondary"
+                        >
+                            ← Back to Dashboard
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -122,10 +122,7 @@ class TutorProfileForm(forms.ModelForm):
 
         super().__init__(*args, **kwargs)
 
-        # User is compulsory
         self.fields['user'].required = True
-
-        # Simple dropdown
         self.fields['user'].empty_label = 'Select a user'
 
 
@@ -162,6 +159,39 @@ class TutorProfileAdmin(admin.ModelAdmin):
     ordering = (
         '-id',
     )
+
+    # ==================================================
+    # ACCEPT / REJECT ACTIONS
+    # ==================================================
+
+    actions = [
+        'accept_tutors',
+        'reject_tutors',
+    ]
+
+    @admin.action(description='Accept selected tutors')
+    def accept_tutors(self, request, queryset):
+
+        updated = queryset.update(
+            is_verified=True
+        )
+
+        self.message_user(
+            request,
+            f'{updated} tutor(s) accepted successfully.'
+        )
+
+    @admin.action(description='Reject selected tutors')
+    def reject_tutors(self, request, queryset):
+
+        updated = queryset.update(
+            is_verified=False
+        )
+
+        self.message_user(
+            request,
+            f'{updated} tutor(s) rejected.'
+        )
 
 
 # ==================================================

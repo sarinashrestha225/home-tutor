@@ -1,12 +1,9 @@
+
 from django import forms
 from django.contrib.auth.models import User
 
 from .models import UserProfile
 
-
-# ==================================================
-# REGISTER FORM
-# ==================================================
 
 class RegisterForm(forms.ModelForm):
 
@@ -48,7 +45,6 @@ class RegisterForm(forms.ModelForm):
     )
 
     class Meta:
-
         model = User
 
         fields = [
@@ -59,7 +55,6 @@ class RegisterForm(forms.ModelForm):
         ]
 
         widgets = {
-
             'first_name': forms.TextInput(
                 attrs={
                     'class': 'form-control',
@@ -90,16 +85,13 @@ class RegisterForm(forms.ModelForm):
         }
 
     def clean(self):
-
         cleaned_data = super().clean()
 
         password = cleaned_data.get('password')
         confirm_password = cleaned_data.get('confirm_password')
 
         if password and confirm_password:
-
             if password != confirm_password:
-
                 raise forms.ValidationError(
                     "Passwords do not match."
                 )
@@ -107,14 +99,9 @@ class RegisterForm(forms.ModelForm):
         return cleaned_data
 
 
-# ==================================================
-# STUDENT PROFILE FORM
-# ==================================================
-
 class StudentProfileForm(forms.ModelForm):
 
     class Meta:
-
         model = UserProfile
 
         fields = [
@@ -123,7 +110,6 @@ class StudentProfileForm(forms.ModelForm):
         ]
 
         widgets = {
-
             'phone': forms.TextInput(
                 attrs={
                     'class': 'form-control',
@@ -138,3 +124,4 @@ class StudentProfileForm(forms.ModelForm):
                 }
             ),
         }
+    

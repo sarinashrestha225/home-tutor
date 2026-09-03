@@ -14,9 +14,6 @@ Tutor Profile - Home Tutor
 
             <div class="card shadow-sm border-0 p-4">
 
-                <!-- =========================
-                     HEADER
-                ========================== -->
                 <div class="text-center mb-4">
 
                     <h2 class="fw-bold">
@@ -29,10 +26,6 @@ Tutor Profile - Home Tutor
 
                 </div>
 
-
-                <!-- =========================
-                     FORM ERRORS
-                ========================== -->
                 {% if form.non_field_errors %}
 
                     <div class="alert alert-danger">
@@ -41,15 +34,10 @@ Tutor Profile - Home Tutor
 
                 {% endif %}
 
-
                 <form method="POST" id="tutorProfileForm">
 
                     {% csrf_token %}
 
-
-                    <!-- =========================
-                         QUALIFICATION
-                    ========================== -->
                     <div class="mb-4">
 
                         <label
@@ -71,10 +59,6 @@ Tutor Profile - Home Tutor
 
                     </div>
 
-
-                    <!-- =========================
-                         EXPERIENCE
-                    ========================== -->
                     <div class="mb-4">
 
                         <label
@@ -96,10 +80,6 @@ Tutor Profile - Home Tutor
 
                     </div>
 
-
-                    <!-- =========================
-                         CLASSES
-                    ========================== -->
                     <div class="mb-4">
 
                         <label class="form-label fw-semibold">
@@ -149,10 +129,6 @@ Tutor Profile - Home Tutor
 
                     </div>
 
-
-                    <!-- =========================
-                         SUBJECTS
-                    ========================== -->
                     <div class="mb-4">
 
                         <label
@@ -178,10 +154,6 @@ Tutor Profile - Home Tutor
 
                     </div>
 
-
-                    <!-- =========================
-                         LOCATION
-                    ========================== -->
                     <div class="mb-4">
 
                         <label
@@ -222,10 +194,6 @@ Tutor Profile - Home Tutor
 
                     </div>
 
-
-                    <!-- =========================
-                         LATITUDE
-                    ========================== -->
                     <div class="mb-4">
 
                         <label
@@ -250,10 +218,6 @@ Tutor Profile - Home Tutor
 
                     </div>
 
-
-                    <!-- =========================
-                         LONGITUDE
-                    ========================== -->
                     <div class="mb-4">
 
                         <label
@@ -278,10 +242,6 @@ Tutor Profile - Home Tutor
 
                     </div>
 
-
-                    <!-- =========================
-                         FEE
-                    ========================== -->
                     <div class="mb-4">
 
                         <label
@@ -303,10 +263,6 @@ Tutor Profile - Home Tutor
 
                     </div>
 
-
-                    <!-- =========================
-                         AVAILABLE TIME
-                    ========================== -->
                     <div class="mb-4">
 
                         <label class="form-label fw-semibold">
@@ -356,10 +312,6 @@ Tutor Profile - Home Tutor
 
                     </div>
 
-
-                    <!-- =========================
-                         BUTTONS
-                    ========================== -->
                     <div class="d-flex gap-2">
 
                         <button
@@ -388,11 +340,6 @@ Tutor Profile - Home Tutor
 
 </div>
 
-
-<!-- =========================
-     GPS JAVASCRIPT
-========================== -->
-
 <script>
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -409,7 +356,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const longitudeField =
         document.getElementById("longitude");
 
-
     locationButton.addEventListener(
         "click",
         function () {
@@ -422,10 +368,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-
             locationStatus.innerText =
                 "📍 Getting your current location...";
-
 
             navigator.geolocation.getCurrentPosition(
 
@@ -437,19 +381,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     const longitude =
                         position.coords.longitude;
 
-
                     latitudeField.value =
                         latitude.toFixed(8);
 
                     longitudeField.value =
                         longitude.toFixed(8);
 
-
                     locationStatus.innerText =
                         "✅ GPS location detected successfully.";
 
                 },
-
 
                 function (error) {
 

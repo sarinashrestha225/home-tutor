@@ -8,9 +8,6 @@ Student Dashboard - Home Tutor
 
 <div class="container py-5">
 
-    <!-- =========================
-         WELCOME
-    ========================== -->
     <div class="mb-4">
 
         <h1 class="fw-bold">
@@ -23,22 +20,14 @@ Student Dashboard - Home Tutor
 
     </div>
 
-
-    <!-- =========================
-         FIND A TUTOR
-    ========================== -->
     <div class="card shadow-sm border-0 p-4 mb-4">
 
         <h4 class="fw-bold mb-4">
             🔍 Find a Tutor
         </h4>
 
-
         <div class="row g-3">
 
-            <!-- =========================
-                 CLASS
-            ========================== -->
             <div class="col-md-4">
 
                 <label
@@ -71,10 +60,6 @@ Student Dashboard - Home Tutor
 
             </div>
 
-
-            <!-- =========================
-                 SUBJECT
-            ========================== -->
             <div class="col-md-4">
 
                 <label
@@ -133,10 +118,6 @@ Student Dashboard - Home Tutor
 
             </div>
 
-
-            <!-- =========================
-                 LOCATION
-            ========================== -->
             <div class="col-md-4">
 
                 <label class="form-label fw-semibold">
@@ -172,11 +153,6 @@ Student Dashboard - Home Tutor
 
         </div>
 
-
-        <!-- =========================
-             HIDDEN GPS DATA
-        ========================== -->
-
         <input
             type="hidden"
             id="latitude"
@@ -195,11 +171,6 @@ Student Dashboard - Home Tutor
             value="{% if profile.location %}{{ profile.location }}{% endif %}"
         >
 
-
-        <!-- =========================
-             SAVE LOCATION
-        ========================== -->
-
         <div class="mt-3">
 
             <button
@@ -211,11 +182,6 @@ Student Dashboard - Home Tutor
             </button>
 
         </div>
-
-
-        <!-- =========================
-             FIND TUTORS
-        ========================== -->
 
         <div class="mt-4">
 
@@ -231,17 +197,7 @@ Student Dashboard - Home Tutor
 
     </div>
 
-
-    <!-- =========================
-         QUICK ACTIONS
-    ========================== -->
-
     <div class="row g-4">
-
-
-        <!-- =========================
-             NEARBY TUTORS
-        ========================== -->
 
         <div class="col-md-4">
 
@@ -270,11 +226,6 @@ Student Dashboard - Home Tutor
 
         </div>
 
-
-        <!-- =========================
-             MY REQUESTS
-        ========================== -->
-
         <div class="col-md-4">
 
             <div class="card shadow-sm border-0 p-4 h-100">
@@ -301,11 +252,6 @@ Student Dashboard - Home Tutor
             </div>
 
         </div>
-
-
-        <!-- =========================
-             MY PROFILE
-        ========================== -->
 
         <div class="col-md-4">
 
@@ -336,11 +282,6 @@ Student Dashboard - Home Tutor
 
     </div>
 
-
-    <!-- =========================
-         NOTIFICATIONS
-    ========================== -->
-
     <div class="card shadow-sm border-0 p-4 mt-4">
 
         <div class="d-flex justify-content-between align-items-center">
@@ -368,11 +309,6 @@ Student Dashboard - Home Tutor
 
     </div>
 
-
-    <!-- =========================
-         LOGOUT
-    ========================== -->
-
     <div class="text-center mt-5">
 
         <a
@@ -385,11 +321,6 @@ Student Dashboard - Home Tutor
     </div>
 
 </div>
-
-
-<!-- =========================
-     JAVASCRIPT
-========================== -->
 
 <script>
 
@@ -422,11 +353,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const locationField =
         document.getElementById("location");
 
-
-    /* =========================
-       GET GPS LOCATION
-    ========================== */
-
     locationButton.addEventListener(
         "click",
         function () {
@@ -439,10 +365,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-
             locationStatus.innerText =
                 "📍 Getting your location...";
-
 
             navigator.geolocation.getCurrentPosition(
 
@@ -454,13 +378,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     const longitude =
                         position.coords.longitude;
 
-
                     latitudeField.value =
                         latitude.toFixed(8);
 
                     longitudeField.value =
                         longitude.toFixed(8);
-
 
                     locationStatus.innerText =
                         "✅ GPS detected: " +
@@ -469,7 +391,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         longitude.toFixed(5);
 
                 },
-
 
                 function (error) {
 
@@ -508,11 +429,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     );
 
-
-    /* =========================
-       SAVE LOCATION
-    ========================== */
-
     saveLocationButton.addEventListener(
         "click",
         function () {
@@ -523,7 +439,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const longitude =
                 longitudeField.value;
 
-
             if (!latitude || !longitude) {
 
                 alert(
@@ -533,12 +448,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-
             const csrfToken =
                 document.querySelector(
                     '[name="csrfmiddlewaretoken"]'
                 );
-
 
             if (!csrfToken) {
 
@@ -549,7 +462,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-
             const form =
                 document.createElement("form");
 
@@ -558,9 +470,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             form.action =
                 window.location.href;
-
-
-            /* CSRF */
 
             const csrfInput =
                 document.createElement("input");
@@ -578,9 +487,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 csrfInput
             );
 
-
-            /* Latitude */
-
             const latInput =
                 document.createElement("input");
 
@@ -596,9 +502,6 @@ document.addEventListener("DOMContentLoaded", function () {
             form.appendChild(
                 latInput
             );
-
-
-            /* Longitude */
 
             const lngInput =
                 document.createElement("input");
@@ -616,9 +519,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 lngInput
             );
 
-
-            /* Location */
-
             const locationInput =
                 document.createElement("input");
 
@@ -635,7 +535,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 locationInput
             );
 
-
             document.body.appendChild(
                 form
             );
@@ -644,11 +543,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
     );
-
-
-    /* =========================
-       FIND TUTORS
-    ========================== */
 
     findTutorButton.addEventListener(
         "click",
@@ -660,7 +554,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const subjectValue =
                 subjectSelect.value;
 
-
             if (!classValue) {
 
                 alert(
@@ -669,7 +562,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 return;
             }
-
 
             if (!subjectValue) {
 
@@ -680,10 +572,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-
             const tutorListUrl =
                 "{% url 'tutor_list' %}";
-
 
             const finalUrl =
                 tutorListUrl +
@@ -695,7 +585,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 encodeURIComponent(
                     subjectValue
                 );
-
 
             window.location.href =
                 finalUrl;

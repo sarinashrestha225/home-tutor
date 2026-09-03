@@ -1,3 +1,4 @@
+
 from django.urls import path
 from django.contrib.auth import views as auth_views
 
@@ -49,10 +50,6 @@ urlpatterns = [
         name='student_profile'
     ),
 
-    # ==========================================
-    # FORGOT PASSWORD
-    # ==========================================
-
     path(
         'password-reset/',
         auth_views.PasswordResetView.as_view(
@@ -89,3 +86,4 @@ urlpatterns = [
         name='password_reset_complete'
     ),
 ]
+

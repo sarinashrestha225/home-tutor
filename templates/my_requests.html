@@ -8,10 +8,6 @@ My Tutor Requests - Home Tutor
 
 <div class="container py-5">
 
-    <!-- =========================
-         HEADER
-    ========================== -->
-
     <div class="text-center mb-5">
 
         <h1 class="fw-bold">
@@ -31,21 +27,11 @@ My Tutor Requests - Home Tutor
 
     </div>
 
-
-    <!-- =========================
-         REQUEST LIST
-    ========================== -->
-
     {% for booking in requests %}
 
         <div class="card shadow-sm border-0 p-4 mb-4">
 
             <div class="row g-4">
-
-
-                <!-- =========================
-                     TUTOR DETAILS
-                ========================== -->
 
                 <div class="col-md-8">
 
@@ -59,7 +45,6 @@ My Tutor Requests - Home Tutor
 
                     </h4>
 
-
                     <p class="text-muted">
 
                         {{
@@ -69,7 +54,6 @@ My Tutor Requests - Home Tutor
 
                     </p>
 
-
                     <p class="mb-2">
 
                         <strong>Class:</strong>
@@ -77,7 +61,6 @@ My Tutor Requests - Home Tutor
                         {{ booking.class_name }}
 
                     </p>
-
 
                     <p class="mb-2">
 
@@ -87,7 +70,6 @@ My Tutor Requests - Home Tutor
 
                     </p>
 
-
                     <p class="mb-2">
 
                         <strong>Preferred Time:</strong>
@@ -95,7 +77,6 @@ My Tutor Requests - Home Tutor
                         {{ booking.preferred_time }}
 
                     </p>
-
 
                     {% if booking.message %}
 
@@ -109,9 +90,6 @@ My Tutor Requests - Home Tutor
 
                     {% endif %}
 
-
-                    <!-- Tutor Location -->
-
                     {% if booking.tutor.location %}
 
                         <p class="mb-2">
@@ -123,9 +101,6 @@ My Tutor Requests - Home Tutor
                         </p>
 
                     {% endif %}
-
-
-                    <!-- Tutor Fee -->
 
                     {% if booking.tutor.fee %}
 
@@ -141,19 +116,11 @@ My Tutor Requests - Home Tutor
 
                 </div>
 
-
-                <!-- =========================
-                     STATUS + ACTION
-                ========================== -->
-
                 <div class="col-md-4 text-md-end">
 
                     <h6 class="fw-bold">
                         Status
                     </h6>
-
-
-                    <!-- PENDING -->
 
                     {% if booking.status == 'Pending' %}
 
@@ -163,9 +130,6 @@ My Tutor Requests - Home Tutor
 
                         </span>
 
-
-                    <!-- ACCEPTED -->
-
                     {% elif booking.status == 'Accepted' %}
 
                         <span class="badge bg-success fs-6">
@@ -173,9 +137,6 @@ My Tutor Requests - Home Tutor
                             ✅ Accepted
 
                         </span>
-
-
-                    <!-- REJECTED -->
 
                     {% elif booking.status == 'Rejected' %}
 
@@ -185,9 +146,6 @@ My Tutor Requests - Home Tutor
 
                         </span>
 
-
-                    <!-- COMPLETED -->
-
                     {% elif booking.status == 'Completed' %}
 
                         <span class="badge bg-primary fs-6">
@@ -195,9 +153,6 @@ My Tutor Requests - Home Tutor
                             ⭐ Completed
 
                         </span>
-
-
-                    <!-- OTHER -->
 
                     {% else %}
 
@@ -209,9 +164,6 @@ My Tutor Requests - Home Tutor
 
                     {% endif %}
 
-
-                    <!-- REQUEST DATE -->
-
                     <p class="text-muted mt-3">
 
                         Requested:
@@ -219,11 +171,6 @@ My Tutor Requests - Home Tutor
                         {{ booking.created_at|date:"M d, Y - h:i A" }}
 
                     </p>
-
-
-                    <!-- =========================
-                         REVIEW BUTTON
-                    ========================== -->
 
                     {% if booking.status == 'Accepted' or booking.status == 'Completed' %}
 
@@ -264,11 +211,6 @@ My Tutor Requests - Home Tutor
 
     {% empty %}
 
-
-        <!-- =========================
-             NO REQUESTS
-        ========================== -->
-
         <div class="alert alert-info text-center p-4">
 
             <div style="font-size: 50px;">
@@ -293,11 +235,6 @@ My Tutor Requests - Home Tutor
         </div>
 
     {% endfor %}
-
-
-    <!-- =========================
-         BACK TO DASHBOARD
-    ========================== -->
 
     <div class="text-center mt-4">
 

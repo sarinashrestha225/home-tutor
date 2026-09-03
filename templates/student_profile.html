@@ -14,10 +14,6 @@ Student Profile - Home Tutor
 
             <div class="card shadow-sm border-0 p-4">
 
-                <!-- =========================================
-                     HEADER
-                ========================================== -->
-
                 <div class="text-center mb-4">
 
                     <div style="font-size:55px;">
@@ -34,11 +30,6 @@ Student Profile - Home Tutor
 
                 </div>
 
-
-                <!-- =========================================
-                     SUCCESS / ERROR MESSAGES
-                ========================================== -->
-
                 {% if messages %}
 
                     {% for message in messages %}
@@ -51,11 +42,6 @@ Student Profile - Home Tutor
 
                 {% endif %}
 
-
-                <!-- =========================================
-                     FORM ERRORS
-                ========================================== -->
-
                 {% if form.non_field_errors %}
 
                     <div class="alert alert-danger">
@@ -66,17 +52,9 @@ Student Profile - Home Tutor
 
                 {% endif %}
 
-
-                <!-- =========================================
-                     PROFILE FORM
-                ========================================== -->
-
                 <form method="POST">
 
                     {% csrf_token %}
-
-
-                    <!-- PHONE -->
 
                     <div class="mb-4">
 
@@ -99,9 +77,6 @@ Student Profile - Home Tutor
 
                     </div>
 
-
-                    <!-- LOCATION -->
-
                     <div class="mb-4">
 
                         <label
@@ -122,9 +97,6 @@ Student Profile - Home Tutor
                         {% endfor %}
 
                     </div>
-
-
-                    <!-- GPS INFO -->
 
                     <div class="card bg-light border p-3 mb-4">
 
@@ -160,9 +132,6 @@ Student Profile - Home Tutor
 
                     </div>
 
-
-                    <!-- BUTTONS -->
-
                     <div class="d-flex gap-2">
 
                         <button
@@ -171,7 +140,6 @@ Student Profile - Home Tutor
                         >
                             💾 Save Profile
                         </button>
-
 
                         <a
                             href="{% url 'student_dashboard' %}"

@@ -8,9 +8,6 @@ Find Tutors - Home Tutor
 
 <div class="container py-5">
 
-    <!-- =========================
-         HEADER
-    ========================== -->
     <div class="text-center mb-4">
 
         <h1 class="fw-bold">
@@ -36,15 +33,10 @@ Find Tutors - Home Tutor
 
     </div>
 
-
-    <!-- =========================
-         SEARCH + SORT
-    ========================== -->
     <div class="card shadow-sm border-0 p-4 mb-4">
 
         <form method="GET">
 
-            <!-- Keep selected class -->
             {% if selected_class %}
                 <input
                     type="hidden"
@@ -53,7 +45,6 @@ Find Tutors - Home Tutor
                 >
             {% endif %}
 
-            <!-- Keep selected subject -->
             {% if selected_subject %}
                 <input
                     type="hidden"
@@ -62,10 +53,8 @@ Find Tutors - Home Tutor
                 >
             {% endif %}
 
-
             <div class="row g-3 align-items-end">
 
-                <!-- SEARCH -->
                 <div class="col-md-7">
 
                     <label
@@ -86,8 +75,6 @@ Find Tutors - Home Tutor
 
                 </div>
 
-
-                <!-- SORT -->
                 <div class="col-md-3">
 
                     <label
@@ -135,8 +122,6 @@ Find Tutors - Home Tutor
 
                 </div>
 
-
-                <!-- BUTTON -->
                 <div class="col-md-2">
 
                     <button
@@ -154,11 +139,6 @@ Find Tutors - Home Tutor
 
     </div>
 
-
-    <!-- =========================
-         ACTIVE FILTERS
-    ========================== -->
-
     {% if search_query %}
 
         <div class="alert alert-light border mb-4">
@@ -170,11 +150,6 @@ Find Tutors - Home Tutor
 
     {% endif %}
 
-
-    <!-- =========================
-         TUTOR LIST
-    ========================== -->
-
     <div class="row g-4">
 
         {% for item in tutor_data %}
@@ -185,8 +160,6 @@ Find Tutors - Home Tutor
 
                 <div class="card shadow-sm border-0 h-100 p-4">
 
-
-                    <!-- TUTOR HEADER -->
                     <div class="text-center mb-3">
 
                         <div style="font-size:55px;">
@@ -211,11 +184,8 @@ Find Tutors - Home Tutor
 
                     </div>
 
-
                     <hr>
 
-
-                    <!-- RATING -->
                     <div class="text-center mb-3">
 
                         {% if item.review_count > 0 %}
@@ -255,8 +225,6 @@ Find Tutors - Home Tutor
 
                     </div>
 
-
-                    <!-- QUALIFICATION -->
                     <p>
 
                         <strong>
@@ -278,8 +246,6 @@ Find Tutors - Home Tutor
 
                     </p>
 
-
-                    <!-- EXPERIENCE -->
                     <p>
 
                         <strong>
@@ -291,8 +257,6 @@ Find Tutors - Home Tutor
 
                     </p>
 
-
-                    <!-- CLASSES -->
                     <p>
 
                         <strong>
@@ -304,8 +268,6 @@ Find Tutors - Home Tutor
 
                     </p>
 
-
-                    <!-- SUBJECTS -->
                     <p>
 
                         <strong>
@@ -329,8 +291,6 @@ Find Tutors - Home Tutor
 
                     </p>
 
-
-                    <!-- LOCATION -->
                     <p>
 
                         <strong>
@@ -352,8 +312,6 @@ Find Tutors - Home Tutor
 
                     </p>
 
-
-                    <!-- DISTANCE -->
                     <div class="alert alert-light border py-2">
 
                         <strong>
@@ -365,8 +323,6 @@ Find Tutors - Home Tutor
 
                     </div>
 
-
-                    <!-- FEE -->
                     <p>
 
                         <strong>
@@ -378,8 +334,6 @@ Find Tutors - Home Tutor
 
                     </p>
 
-
-                    <!-- AVAILABILITY -->
                     <p>
 
                         <strong>
@@ -401,8 +355,6 @@ Find Tutors - Home Tutor
 
                     </p>
 
-
-                    <!-- REQUEST -->
                     <div class="mt-auto pt-3">
 
                         <a
@@ -420,10 +372,7 @@ Find Tutors - Home Tutor
 
             {% endwith %}
 
-
         {% empty %}
-
-            <!-- NO RESULT -->
 
             <div class="col-12">
 
@@ -459,8 +408,6 @@ Find Tutors - Home Tutor
 
     </div>
 
-
-    <!-- BACK -->
     <div class="text-center mt-5">
 
         <a

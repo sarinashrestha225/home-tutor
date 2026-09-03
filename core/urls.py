@@ -8,20 +8,12 @@ from .views import (
 
 urlpatterns = [
 
-    # =========================
-    # HOME
-    # =========================
-
     path(
         '',
         home,
         name='home'
     ),
 
-
-    # =========================
-    # CUSTOM ADMIN DASHBOARD
-    # =========================
 
     path(
         'admin-dashboard/',

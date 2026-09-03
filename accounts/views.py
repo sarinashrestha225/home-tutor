@@ -8,10 +8,6 @@ from .models import UserProfile
 from bookings.models import Notification
 
 
-# ==================================================
-# CREATE UNIQUE USERNAME
-# ==================================================
-
 def generate_unique_username(first_name, last_name):
 
     first_name = (first_name or '').strip().lower()
@@ -36,10 +32,6 @@ def generate_unique_username(first_name, last_name):
 
     return username
 
-
-# ==================================================
-# REGISTER
-# ==================================================
 
 def register(request):
 
@@ -80,20 +72,10 @@ def register(request):
                 'password'
             )
 
-
-            # ------------------------------------------
-            # AUTOMATIC UNIQUE USERNAME
-            # ------------------------------------------
-
             username = generate_unique_username(
                 first_name,
                 last_name
             )
-
-
-            # ------------------------------------------
-            # CREATE USER
-            # ------------------------------------------
 
             user = User.objects.create_user(
                 username=username,
@@ -103,21 +85,11 @@ def register(request):
                 password=password
             )
 
-
-            # ------------------------------------------
-            # CREATE PROFILE
-            # ------------------------------------------
-
             UserProfile.objects.create(
                 user=user,
                 role=role,
                 phone=phone
             )
-
-
-            # ------------------------------------------
-            # ADMIN NOTIFICATION
-            # ------------------------------------------
 
             admin_users = User.objects.filter(
                 is_staff=True,
@@ -140,20 +112,10 @@ def register(request):
                     )
                 )
 
-
-            # ------------------------------------------
-            # LOGIN NEW USER
-            # ------------------------------------------
-
             login(
                 request,
                 user
             )
-
-
-            # ------------------------------------------
-            # REDIRECT BY ROLE
-            # ------------------------------------------
 
             if role == 'tutor':
 
@@ -169,7 +131,6 @@ def register(request):
 
         form = RegisterForm()
 
-
     return render(
         request,
         'register.html',
@@ -179,17 +140,11 @@ def register(request):
     )
 
 
-# ==================================================
-# LOGIN
-# ==================================================
-
 def user_login(request):
 
     if request.user.is_authenticated:
 
-        # Already logged in
         return redirect('/')
-
 
     if request.method == 'POST':
 
@@ -203,11 +158,6 @@ def user_login(request):
             ''
         )
 
-
-        # ------------------------------------------
-        # CHECK USERNAME
-        # ------------------------------------------
-
         if not username:
 
             return render(
@@ -217,11 +167,6 @@ def user_login(request):
                     'error': 'Please enter your username.'
                 }
             )
-
-
-        # ------------------------------------------
-        # CHECK PASSWORD
-        # ------------------------------------------
 
         if not password:
 
@@ -233,17 +178,11 @@ def user_login(request):
                 }
             )
 
-
-        # ------------------------------------------
-        # AUTHENTICATE
-        # ------------------------------------------
-
         user = authenticate(
             request,
             username=username,
             password=password
         )
-
 
         if user is None:
 
@@ -258,20 +197,10 @@ def user_login(request):
                 }
             )
 
-
-        # ------------------------------------------
-        # LOGIN
-        # ------------------------------------------
-
         login(
             request,
             user
         )
-
-
-        # ------------------------------------------
-        # GET / CREATE PROFILE
-        # ------------------------------------------
 
         profile, created = (
             UserProfile.objects.get_or_create(
@@ -282,18 +211,11 @@ def user_login(request):
             )
         )
 
-
-        # ------------------------------------------
-        # NEXT URL
-        # ------------------------------------------
-
         next_url = (
             request.POST.get('next')
             or request.GET.get('next')
         )
 
-
-        # Only allow local URLs
         if (
             next_url
             and next_url.startswith('/')
@@ -304,30 +226,15 @@ def user_login(request):
                 next_url
             )
 
-
-        # ------------------------------------------
-        # TUTOR
-        # ------------------------------------------
-
         if profile.role == 'tutor':
 
             return redirect(
                 'tutor_dashboard'
             )
 
-
-        # ------------------------------------------
-        # STUDENT
-        # ------------------------------------------
-
         return redirect(
             'student_dashboard'
         )
-
-
-    # ------------------------------------------
-    # GET REQUEST
-    # ------------------------------------------
 
     next_url = request.GET.get(
         'next',
@@ -343,10 +250,6 @@ def user_login(request):
     )
 
 
-# ==================================================
-# LOGOUT
-# ==================================================
-
 def user_logout(request):
 
     logout(request)
@@ -356,10 +259,6 @@ def user_logout(request):
     )
 
 
-# ==================================================
-# STUDENT DASHBOARD
-# ==================================================
-
 def student_dashboard(request):
 
     if not request.user.is_authenticated:
@@ -367,7 +266,6 @@ def student_dashboard(request):
         return redirect(
             'login'
         )
-
 
     profile, created = (
         UserProfile.objects.get_or_create(
@@ -377,11 +275,6 @@ def student_dashboard(request):
             }
         )
     )
-
-
-    # ------------------------------------------
-    # SAVE GPS
-    # ------------------------------------------
 
     if request.method == 'POST':
 
@@ -396,7 +289,6 @@ def student_dashboard(request):
         location = request.POST.get(
             'location'
         )
-
 
         if latitude and longitude:
 
@@ -422,7 +314,6 @@ def student_dashboard(request):
 
                 pass
 
-
     return render(
         request,
         'student_dashboard.html',
@@ -432,10 +323,6 @@ def student_dashboard(request):
     )
 
 
-# ==================================================
-# STUDENT PROFILE
-# ==================================================
-
 def student_profile(request):
 
     if not request.user.is_authenticated:
@@ -443,7 +330,6 @@ def student_profile(request):
         return redirect(
             'login'
         )
-
 
     profile, created = (
         UserProfile.objects.get_or_create(
@@ -453,7 +339,6 @@ def student_profile(request):
             }
         )
     )
-
 
     if request.method == 'POST':
 
@@ -476,7 +361,6 @@ def student_profile(request):
             instance=profile
         )
 
-
     return render(
         request,
         'student_profile.html',
@@ -486,10 +370,6 @@ def student_profile(request):
     )
 
 
-# ==================================================
-# TUTOR DASHBOARD
-# ==================================================
-
 def tutor_dashboard(request):
 
     if not request.user.is_authenticated:
@@ -498,14 +378,11 @@ def tutor_dashboard(request):
             'login'
         )
 
-
     from tutors.models import TutorProfile
-
 
     tutor_profile = TutorProfile.objects.filter(
         user=request.user
     ).first()
-
 
     return render(
         request,

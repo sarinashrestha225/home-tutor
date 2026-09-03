@@ -3,10 +3,6 @@ from django.contrib.auth.models import User
 from tutors.models import TutorProfile
 
 
-# ==================================================
-# BOOKING
-# ==================================================
-
 class Booking(models.Model):
 
     STATUS_CHOICES = [
@@ -61,10 +57,6 @@ class Booking(models.Model):
             f"({self.status})"
         )
 
-
-# ==================================================
-# NOTIFICATION
-# ==================================================
 
 class Notification(models.Model):
 

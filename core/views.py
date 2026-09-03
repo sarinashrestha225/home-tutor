@@ -6,10 +6,6 @@ from bookings.models import Booking, Notification
 from tutors.models import TutorProfile, Review
 
 
-# ==================================================
-# HOME
-# ==================================================
-
 def home(request):
 
     return render(
@@ -18,15 +14,7 @@ def home(request):
     )
 
 
-# ==================================================
-# CUSTOM ADMIN DASHBOARD
-# ==================================================
-
 def admin_dashboard(request):
-
-    # --------------------------------------------------
-    # LOGIN CHECK
-    # --------------------------------------------------
 
     if not request.user.is_authenticated:
         return render(
@@ -34,19 +22,11 @@ def admin_dashboard(request):
             'home.html'
         )
 
-    # --------------------------------------------------
-    # STAFF CHECK
-    # --------------------------------------------------
-
     if not request.user.is_staff:
         return render(
             request,
             'home.html'
         )
-
-    # ==================================================
-    # STATISTICS
-    # ==================================================
 
     total_students = UserProfile.objects.filter(
         role='student'
@@ -82,10 +62,6 @@ def admin_dashboard(request):
         is_verified=False
     ).count()
 
-    # ==================================================
-    # ADMIN NOTIFICATIONS
-    # ==================================================
-
     admin_notifications = Notification.objects.filter(
         user=request.user
     ).order_by(
@@ -96,10 +72,6 @@ def admin_dashboard(request):
         user=request.user,
         is_read=False
     ).count()
-
-    # ==================================================
-    # RENDER DASHBOARD
-    # ==================================================
 
     return render(
         request,

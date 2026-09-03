@@ -1,10 +1,7 @@
+
 from django.db import models
 from django.contrib.auth.models import User
 
-
-# ==================================================
-# USER PROFILE
-# ==================================================
 
 class UserProfile(models.Model):
 
@@ -28,10 +25,6 @@ class UserProfile(models.Model):
         blank=True
     )
 
-    # ==================================================
-    # STUDENT / USER LOCATION
-    # ==================================================
-
     location = models.CharField(
         max_length=255,
         blank=True
@@ -54,10 +47,6 @@ class UserProfile(models.Model):
             f"{self.role}"
         )
 
-
-# ==================================================
-# ADMIN PROFILE
-# ==================================================
 
 class AdminProfile(models.Model):
 
@@ -83,3 +72,4 @@ class AdminProfile(models.Model):
             f"{self.user.username} - "
             f"{self.designation}"
         )
+

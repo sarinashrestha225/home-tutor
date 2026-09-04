@@ -4,10 +4,6 @@ from django import forms
 from .models import TutorProfile, Subject, Review
 
 
-# ==================================================
-# SUBJECT ADMIN
-# ==================================================
-
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
 
@@ -24,10 +20,6 @@ class SubjectAdmin(admin.ModelAdmin):
         'name',
     )
 
-
-# ==================================================
-# TUTOR PROFILE FORM
-# ==================================================
 
 class TutorProfileForm(forms.ModelForm):
 
@@ -126,10 +118,6 @@ class TutorProfileForm(forms.ModelForm):
         self.fields['user'].empty_label = 'Select a user'
 
 
-# ==================================================
-# TUTOR PROFILE ADMIN
-# ==================================================
-
 @admin.register(TutorProfile)
 class TutorProfileAdmin(admin.ModelAdmin):
 
@@ -140,6 +128,10 @@ class TutorProfileAdmin(admin.ModelAdmin):
         'qualification',
         'experience',
         'fee',
+        'is_verified',
+    )
+
+    list_editable = (
         'is_verified',
     )
 
@@ -160,43 +152,6 @@ class TutorProfileAdmin(admin.ModelAdmin):
         '-id',
     )
 
-    # ==================================================
-    # ACCEPT / REJECT ACTIONS
-    # ==================================================
-
-    actions = [
-        'accept_tutors',
-        'reject_tutors',
-    ]
-
-    @admin.action(description='Accept selected tutors')
-    def accept_tutors(self, request, queryset):
-
-        updated = queryset.update(
-            is_verified=True
-        )
-
-        self.message_user(
-            request,
-            f'{updated} tutor(s) accepted successfully.'
-        )
-
-    @admin.action(description='Reject selected tutors')
-    def reject_tutors(self, request, queryset):
-
-        updated = queryset.update(
-            is_verified=False
-        )
-
-        self.message_user(
-            request,
-            f'{updated} tutor(s) rejected.'
-        )
-
-
-# ==================================================
-# REVIEW ADMIN
-# ==================================================
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):

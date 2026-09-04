@@ -2,10 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-# ==================================================
-# SUBJECT
-# ==================================================
-
 class Subject(models.Model):
 
     name = models.CharField(
@@ -15,10 +11,6 @@ class Subject(models.Model):
     def __str__(self):
         return self.name
 
-
-# ==================================================
-# TUTOR PROFILE
-# ==================================================
 
 class TutorProfile(models.Model):
 
@@ -82,10 +74,6 @@ class TutorProfile(models.Model):
             or self.user.username
         )
 
-
-# ==================================================
-# REVIEW & RATING
-# ==================================================
 
 class Review(models.Model):
 

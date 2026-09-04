@@ -3,33 +3,17 @@ from django import forms
 from .models import TutorProfile, Subject, Review
 
 
-# ==================================================
-# AVAILABLE TIME OPTIONS
-# ==================================================
-
 TIME_CHOICES = [
-
-    # -----------------------------
-    # MORNING
-    # -----------------------------
 
     ('6 AM - 7 AM', '6 AM - 7 AM'),
     ('7 AM - 8 AM', '7 AM - 8 AM'),
     ('6 AM - 8 AM', '6 AM - 8 AM'),
-
-    # -----------------------------
-    # EVENING - 1 HOUR
-    # -----------------------------
 
     ('4 PM - 5 PM', '4 PM - 5 PM'),
     ('5 PM - 6 PM', '5 PM - 6 PM'),
     ('6 PM - 7 PM', '6 PM - 7 PM'),
     ('7 PM - 8 PM', '7 PM - 8 PM'),
     ('8 PM - 9 PM', '8 PM - 9 PM'),
-
-    # -----------------------------
-    # EVENING - 2 HOURS
-    # -----------------------------
 
     ('4 PM - 6 PM', '4 PM - 6 PM'),
     ('5 PM - 7 PM', '5 PM - 7 PM'),
@@ -38,15 +22,7 @@ TIME_CHOICES = [
 ]
 
 
-# ==================================================
-# TUTOR PROFILE FORM
-# ==================================================
-
 class TutorProfileForm(forms.ModelForm):
-
-    # ------------------------------------------
-    # CLASSES
-    # ------------------------------------------
 
     CLASSES_CHOICES = [
         ('Class 2', 'Class 2'),
@@ -60,17 +36,11 @@ class TutorProfileForm(forms.ModelForm):
         ('Class 10', 'Class 10'),
     ]
 
-
     classes = forms.MultipleChoiceField(
         choices=CLASSES_CHOICES,
         widget=forms.CheckboxSelectMultiple,
         required=True
     )
-
-
-    # ------------------------------------------
-    # SUBJECTS
-    # ------------------------------------------
 
     subjects = forms.ModelMultipleChoiceField(
         queryset=Subject.objects.all().order_by('name'),
@@ -83,17 +53,11 @@ class TutorProfileForm(forms.ModelForm):
         required=True
     )
 
-
-    # ------------------------------------------
-    # AVAILABLE TIME
-    # ------------------------------------------
-
     available_time = forms.MultipleChoiceField(
         choices=TIME_CHOICES,
         widget=forms.CheckboxSelectMultiple,
         required=True
     )
-
 
     class Meta:
 
@@ -111,12 +75,7 @@ class TutorProfileForm(forms.ModelForm):
             'available_time',
         ]
 
-
         widgets = {
-
-            # --------------------------------------
-            # QUALIFICATION
-            # --------------------------------------
 
             'qualification': forms.TextInput(
                 attrs={
@@ -127,11 +86,6 @@ class TutorProfileForm(forms.ModelForm):
                 }
             ),
 
-
-            # --------------------------------------
-            # EXPERIENCE
-            # --------------------------------------
-
             'experience': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
@@ -139,11 +93,6 @@ class TutorProfileForm(forms.ModelForm):
                     'min': 0
                 }
             ),
-
-
-            # --------------------------------------
-            # LOCATION
-            # --------------------------------------
 
             'location': forms.TextInput(
                 attrs={
@@ -154,11 +103,6 @@ class TutorProfileForm(forms.ModelForm):
                 }
             ),
 
-
-            # --------------------------------------
-            # LATITUDE
-            # --------------------------------------
-
             'latitude': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
@@ -167,11 +111,6 @@ class TutorProfileForm(forms.ModelForm):
                 }
             ),
 
-
-            # --------------------------------------
-            # LONGITUDE
-            # --------------------------------------
-
             'longitude': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
@@ -179,11 +118,6 @@ class TutorProfileForm(forms.ModelForm):
                     'readonly': True
                 }
             ),
-
-
-            # --------------------------------------
-            # FEE
-            # --------------------------------------
 
             'fee': forms.NumberInput(
                 attrs={
@@ -195,22 +129,12 @@ class TutorProfileForm(forms.ModelForm):
             ),
         }
 
-
-    # ==================================================
-    # INIT
-    # ==================================================
-
     def __init__(self, *args, **kwargs):
 
         super().__init__(
             *args,
             **kwargs
         )
-
-
-        # ------------------------------------------
-        # CLASSES - CONVERT SAVED STRING TO LIST
-        # ------------------------------------------
 
         if self.instance and self.instance.classes:
 
@@ -221,11 +145,6 @@ class TutorProfileForm(forms.ModelForm):
             ]
 
             self.initial['classes'] = saved_classes
-
-
-        # ------------------------------------------
-        # AVAILABLE TIME - CONVERT SAVED STRING
-        # ------------------------------------------
 
         if (
             self.instance
@@ -239,11 +158,6 @@ class TutorProfileForm(forms.ModelForm):
             ]
 
             self.initial['available_time'] = saved_times
-
-
-    # ==================================================
-    # CLEAN CLASSES
-    # ==================================================
 
     def clean_classes(self):
 
@@ -259,11 +173,6 @@ class TutorProfileForm(forms.ModelForm):
 
         return ', '.join(classes)
 
-
-    # ==================================================
-    # CLEAN AVAILABLE TIME
-    # ==================================================
-
     def clean_available_time(self):
 
         times = self.cleaned_data.get(
@@ -278,10 +187,6 @@ class TutorProfileForm(forms.ModelForm):
 
         return ', '.join(times)
 
-
-# ==================================================
-# REVIEW FORM
-# ==================================================
 
 class ReviewForm(forms.ModelForm):
 

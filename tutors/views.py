@@ -8,10 +8,6 @@ from .models import TutorProfile, Review
 from .forms import TutorProfileForm
 
 
-# ==================================================
-# TUTOR PROFILE
-# ==================================================
-
 @login_required
 def tutor_profile(request):
 
@@ -33,10 +29,6 @@ def tutor_profile(request):
             )
 
             tutor_profile.user = request.user
-
-            # ==============================
-            # SAVE GPS
-            # ==============================
 
             latitude = request.POST.get('latitude')
             longitude = request.POST.get('longitude')
@@ -76,33 +68,13 @@ def tutor_profile(request):
     )
 
 
-# ==================================================
-# TUTOR LIST
-# NORMAL SEARCH
-# CLASS
-# SUBJECT
-# SEARCH
-# DISTANCE
-# RATING
-# SORT
-# ==================================================
-
 def tutor_list(request):
 
     from accounts.models import UserProfile
 
-    # ==================================================
-    # VERIFIED TUTORS
-    # ==================================================
-
     tutors = TutorProfile.objects.filter(
         is_verified=True
     ).distinct()
-
-
-    # ==================================================
-    # GET FILTERS
-    # ==================================================
 
     selected_class = request.GET.get(
         'class',
@@ -124,32 +96,17 @@ def tutor_list(request):
         'distance'
     ).strip()
 
-
-    # ==================================================
-    # CLASS FILTER
-    # ==================================================
-
     if selected_class:
 
         tutors = tutors.filter(
             classes__icontains=selected_class
         )
 
-
-    # ==================================================
-    # SUBJECT FILTER
-    # ==================================================
-
     if selected_subject:
 
         tutors = tutors.filter(
             subjects__name__iexact=selected_subject
         )
-
-
-    # ==================================================
-    # SEARCH
-    # ==================================================
 
     if search_query:
 
@@ -185,11 +142,6 @@ def tutor_list(request):
 
         )
 
-
-    # ==================================================
-    # STUDENT PROFILE
-    # ==================================================
-
     student_profile = None
 
     if request.user.is_authenticated:
@@ -197,11 +149,6 @@ def tutor_list(request):
         student_profile = UserProfile.objects.filter(
             user=request.user
         ).first()
-
-
-    # ==================================================
-    # STUDENT GPS
-    # ==================================================
 
     student_latitude = None
     student_longitude = None
@@ -211,22 +158,11 @@ def tutor_list(request):
         student_latitude = student_profile.latitude
         student_longitude = student_profile.longitude
 
-
-    # ==================================================
-    # TUTOR DATA
-    # ==================================================
-
     tutor_data = []
-
-
-    # ==================================================
-    # CALCULATE DISTANCE
-    # ==================================================
 
     for tutor in tutors:
 
         distance = None
-
 
         if (
             student_latitude is not None
@@ -235,7 +171,6 @@ def tutor_list(request):
             and tutor.longitude is not None
         ):
 
-            # Student coordinates
             lat1 = radians(
                 float(student_latitude)
             )
@@ -244,8 +179,6 @@ def tutor_list(request):
                 float(student_longitude)
             )
 
-
-            # Tutor coordinates
             lat2 = radians(
                 float(tutor.latitude)
             )
@@ -254,13 +187,9 @@ def tutor_list(request):
                 float(tutor.longitude)
             )
 
-
-            # Difference
             dlat = lat2 - lat1
             dlon = lon2 - lon1
 
-
-            # Haversine formula
             a = (
                 sin(dlat / 2) ** 2
                 +
@@ -269,24 +198,16 @@ def tutor_list(request):
                 * sin(dlon / 2) ** 2
             )
 
-
             c = 2 * atan2(
                 sqrt(a),
                 sqrt(1 - a)
             )
 
-
             earth_radius = 6371
-
 
             distance = (
                 earth_radius * c
             )
-
-
-        # ==================================================
-        # RATING
-        # ==================================================
 
         reviews = Review.objects.filter(
             tutor=tutor
@@ -295,7 +216,6 @@ def tutor_list(request):
         review_count = reviews.count()
 
         average_rating = 0
-
 
         if review_count > 0:
 
@@ -308,11 +228,6 @@ def tutor_list(request):
                 total_rating /
                 review_count
             )
-
-
-        # ==================================================
-        # ADD TUTOR
-        # ==================================================
 
         tutor_data.append(
             {
@@ -329,11 +244,6 @@ def tutor_list(request):
             }
         )
 
-
-    # ==================================================
-    # SORT
-    # ==================================================
-
     if sort_by == 'rating':
 
         tutor_data.sort(
@@ -343,7 +253,6 @@ def tutor_list(request):
             reverse=True
         )
 
-
     elif sort_by == 'fee_low':
 
         tutor_data.sort(
@@ -351,7 +260,6 @@ def tutor_list(request):
                 float(item['tutor'].fee)
             )
         )
-
 
     elif sort_by == 'fee_high':
 
@@ -362,10 +270,8 @@ def tutor_list(request):
             reverse=True
         )
 
-
     elif sort_by == 'distance':
 
-        # Tutors with GPS first
         tutor_data.sort(
             key=lambda item: (
                 item['distance']
@@ -373,7 +279,6 @@ def tutor_list(request):
                 else 999999
             )
         )
-
 
     return render(
         request,
